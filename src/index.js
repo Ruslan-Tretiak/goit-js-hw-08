@@ -1,1 +1,0 @@
-console.log("hello my facking crazy world");
