@@ -1,29 +1,38 @@
 const feedbackForm = document.querySelector('.feedback-form');
-const emailInput = feedbackForm.elements.email;
-const messageInput = feedbackForm.elements.message;
 
+function saveFeedbackToLocalStorage() {
+    const formData = new FormData(feedbackForm);
+    const feedback = {};
+    formData.forEach((value, name) => {
+      feedback[name] = value;
+    });
+    const serializedFeedback = JSON.stringify(feedback);
+    localStorage.setItem('feedback-form-state', serializedFeedback); 
+}
+function loadFeedbackFromLocalStorage() {
+    const serializedFeedback = localStorage.getItem('feedback-form-state');
+    if (serializedFeedback) {
+        const feedback = JSON.parse(serializedFeedback);
+        for (const name in feedback) {
+            const input = feedbackForm.elements[name];
+            if (input) {
+                input.value = feedback[name];
+            }
+        }
+    }
+}
+function resetFeedbackForm() {
+  feedbackForm.reset();
+  saveFeedbackToLocalStorage();
+}
 
-const saveFeedback = () => {
-    const inputItems = {
-        email: emailInput.value,
-        massage: messageInput.value,
-    };
-localStorage.setItem("feedback-form-state", JSON.stringify(inputItems));
-}   
-const loadFeedback = () => {
-  const feedbackData = localStorage.getItem("feedback-form-state");
-  if (feedbackData) {
-    const inputItems = JSON.parse(feedbackData);
-    emailInput.value = inputItems.email;
-    messageInput.value = inputItems.message;
-  }
-};
+feedbackForm.addEventListener('input', saveFeedbackToLocalStorage);
+feedbackForm.addEventListener('submit', function(evt) {
+  evt.preventDefault();
+  resetFeedbackForm();
+});
 
-feedbackForm.addEventListener('input', saveFeedback);
-loadFeedback();
-
-
-
+loadFeedbackFromLocalStorage();
 
 
 
