@@ -1,0 +1,2 @@
+!function(){var e=document.querySelector(".feedback-form");function t(){var t=new FormData(e),a={};t.forEach((function(e,t){a[t]=e}));var r=JSON.stringify(a);localStorage.setItem("feedback-form-state",r)}e.addEventListener("input",t),e.addEventListener("submit",(function(a){a.preventDefault(),e.reset(),t()})),function(){var t=localStorage.getItem("feedback-form-state");if(t){var a=JSON.parse(t);for(var r in a){var n=e.elements[r];n&&(n.value=a[r])}}}()}();
+//# sourceMappingURL=03-feedback.3f19689a.js.map
