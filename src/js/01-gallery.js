@@ -3,8 +3,6 @@ import SimpleLightbox from "simplelightbox";
 // Додатковий імпорт стилів
 import "simplelightbox/dist/simple-lightbox.min.css";
 import { galleryItems } from './gallery-items';
-console.log(galleryItems);
-console.log(SimpleLightbox);
 
 const gallery = document.querySelector('.gallery');
 const imgList = galleryItems.map(({ preview, original, description }) => `

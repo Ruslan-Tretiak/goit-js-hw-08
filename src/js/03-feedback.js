@@ -1,6 +1,8 @@
+import throttle from 'lodash.throttle';
+
 const feedbackForm = document.querySelector('.feedback-form');
 
-function saveFeedbackToLocalStorage() {
+function saveFeedback() {
   const emailInput = feedbackForm.elements.email;
   const messageInput = feedbackForm.elements.message;
 
@@ -17,7 +19,9 @@ function saveFeedbackToLocalStorage() {
   }
 }
 
-function loadFeedbackFromLocalStorage() {
+const throttledSaveFeedback = throttle(saveFeedback, 500);
+
+function loadFeedback() {
   try {
     const serializedFeedback = localStorage.getItem('feedback-form-state');
     if (serializedFeedback) {
@@ -30,19 +34,25 @@ function loadFeedbackFromLocalStorage() {
   }
 }
 
-function resetFeedbackForm() {
-  feedbackForm.reset();
-  saveFeedbackToLocalStorage();
-}
+feedbackForm.addEventListener('input', throttledSaveFeedback);
 
-feedbackForm.addEventListener('input', saveFeedbackToLocalStorage);
+window.addEventListener('load', loadFeedback);
+
 feedbackForm.addEventListener('submit', function(event) {
-  event.preventDefault();
-  resetFeedbackForm();
+  event.preventDefault('');
+
+  const emailInput = feedbackForm.elements.email;
+  const messageInput = feedbackForm.elements.message;
+
+  const feedback = {
+    email: emailInput.value,
+    message: messageInput.value
+  };
+
+  console.log(feedback);
+
+  emailInput.value = '';
+  messageInput.value = '';
+
+  localStorage.removeItem('feedback-form-state');
 });
-
-loadFeedbackFromLocalStorage();
-
-
-
-
