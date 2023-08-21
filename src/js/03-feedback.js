@@ -27,7 +27,7 @@ function loadFeedback() {
     if (serializedFeedback) {
       const feedback = JSON.parse(serializedFeedback);
       feedbackForm.elements.email.value = feedback.email;
-      feedbackForm.elements.message.value = feedback.message;
+      feedbackForm.elements.message.value = feedback.message
     }
   } catch (error) {
     console.error('Get state error: ', error.message);
